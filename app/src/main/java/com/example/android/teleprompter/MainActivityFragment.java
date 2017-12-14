@@ -18,8 +18,8 @@ import butterknife.ButterKnife;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    @BindView(R.id.rv_list)
-    RecyclerView mRecyclerView_List;
+
+    private RecyclerView mRecyclerView_List;
 
     private final String BUNDLE_RECYCLE_LAYOUT = "recycler_view_bundle";
 
@@ -35,7 +35,10 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ButterKnife.bind(this, root);
+        //ButterKnife.bind(this, root);
+        mRecyclerView_List = root.findViewById(R.id.rv_list);
+
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mRecyclerView_List.setLayoutManager(mLinearLayoutManager);
 
