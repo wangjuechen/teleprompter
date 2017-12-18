@@ -5,8 +5,12 @@
     <dimen name="vertical_margin">16dp</dimen>
 
     <dimen name="list_height">72dp</dimen>
+    <dimen name="list_subtitle">48dp</dimen>
+    <dimen name="toolbar_size">56dp</dimen>
 
     <dimen name="list_icon_size">40dp</dimen>
+    <dimen name="list_actionIcon_size">18dp</dimen>
 
     <dimen name="heading_font_size">16sp</dimen>
+
 </resources>
