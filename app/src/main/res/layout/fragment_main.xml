@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivityFragment"
-    tools:showIn="@layout/activity_main">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tv_list_subtitle"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.android.teleprompter.viewModel.DocumentViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_subtitle"
-        android:layout_marginLeft="@dimen/horizon_margin"
-        android:layout_marginStart="@dimen/horizon_margin"
-        android:gravity="center_vertical"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-        android:textColor="@android:color/darker_gray"
-        tools:text = "Today"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivityFragment"
+        tools:showIn="@layout/activity_main">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        <TextView
+            android:id="@+id/tv_list_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_subtitle"
+            android:layout_marginLeft="@dimen/horizon_margin"
+            android:layout_marginStart="@dimen/horizon_margin"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:textColor="@android:color/darker_gray"
+            tools:text = "Today"/>
 
-</LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+    </LinearLayout>
+</layout>
+

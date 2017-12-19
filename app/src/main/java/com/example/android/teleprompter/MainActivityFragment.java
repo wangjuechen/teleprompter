@@ -1,5 +1,6 @@
 package com.example.android.teleprompter;
 
+import android.databinding.DataBindingUtil;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,14 +13,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.teleprompter.Adaptor.RecyclerViewAdaptors;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.example.android.teleprompter.databinding.FragmentMainBinding;
+import com.example.android.teleprompter.viewModel.DocumentListViewModel;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
+
+    private FragmentMainBinding documentlistFragmentListBinding;
+
+    private DocumentListViewModel mDocumentListViewModel;
 
     private RecyclerView mRecyclerView_List;
 
@@ -38,17 +42,19 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdaptor = new RecyclerViewAdaptors();
+        mAdaptor = new RecyclerViewAdaptors(getContext());
+
+        
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        documentlistFragmentListBinding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_main,
+                );
 
-        mRecyclerView_List = root.findViewById(R.id.rv_list);
-
-        mTextView_listSubtitle = root.findViewById(R.id.tv_list_subtitle);
+        mDocumentListViewModel = new DocumentListViewModel(getActivity());
 
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 

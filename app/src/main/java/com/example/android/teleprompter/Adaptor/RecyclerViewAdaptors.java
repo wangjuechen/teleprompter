@@ -1,32 +1,45 @@
 package com.example.android.teleprompter.Adaptor;
 
 
+import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.android.teleprompter.R;
+import com.example.android.teleprompter.model.Document;
+import com.example.android.teleprompter.databinding.RecyclerviewListContentBinding;
+import com.example.android.teleprompter.viewModel.DocumentViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdaptors.documentsListViewHolder>{
 
-    public RecyclerViewAdaptors(){
+    private List<Document> mDocumentList;
 
+    private Context mContext;
+
+    public RecyclerViewAdaptors(Context context){
+
+        mDocumentList = new ArrayList<>();
+
+        mContext = context;
     }
 
     @Override
     public documentsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.recyclerview_list_content, parent, false);
+        RecyclerviewListContentBinding view = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.recyclerview_list_content, parent, false);
         return new documentsListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(documentsListViewHolder holder, int position) {
-        holder.file_title.setText("Title");
-        holder.file_info.setText("Opened at 4th Oct");
+        RecyclerviewListContentBinding contentBinding = holder.mListContentBinding;
+
+        contentBinding.setViewModel(new DocumentViewModel(mContext,mDocumentList.get(position)));
     }
 
     @Override
@@ -34,20 +47,19 @@ public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdapt
         return 1;
     }
 
-    public class documentsListViewHolder extends RecyclerView.ViewHolder {
+    public static class documentsListViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView file_icon;
-        TextView file_title;
-        TextView file_info;
+        private RecyclerviewListContentBinding mListContentBinding;
 
-        public documentsListViewHolder(View itemView) {
 
-            super(itemView);
+        public documentsListViewHolder(RecyclerviewListContentBinding binding) {
 
-            View contentView = itemView;
-            file_icon = contentView.findViewById(R.id.iv_fileTypeIcon);
-            file_title = contentView.findViewById(R.id.tv_fileTitle);
-            file_info = contentView.findViewById(R.id.tv_fileInfo);
+            super(binding.listContentCondtraintLayout);
+
+            mListContentBinding = binding;
+
+
+            ;
         }
     }
 
