@@ -1,38 +1,49 @@
 package com.example.android.teleprompter.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.w3c.dom.DocumentType;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Document {
-    public Date time;
-    public String title;
-    public String text;
+public class Document implements Serializable{
 
-    public DocumentType documentType;
+    @SerializedName("time") public Date time;
 
-    public enum DocumentType {
+    @SerializedName("title") public String title;
 
-        STORY("story"),
+    @SerializedName("text") public String text;
 
-        ASK("ask"),
+    @SerializedName("documentType") public String documentType;
 
-        JOB("job");
+//    public DocumentType documentType;
 
-        private String string;
+//    public enum DocumentType {
+//
+//        STORY("story"),
+//
+//        ASK("ask"),
+//
+//        JOB("job");
+//
+//        private String string;
+//
+//        DocumentType(String string) {
+//            this.string = string;
+//        }
+//
+//        public static DocumentType fromString(String string) {
+//            if (string != null) {
+//                for (DocumentType documentType : DocumentType.values()) {
+//                    if (string.equalsIgnoreCase(documentType.string)) return documentType;
+//                }
+//            }
+//            return null;
+//        }
+//    }
 
-        DocumentType(String string) {
-            this.string = string;
-        }
+//    public Document() { }
 
-        public static DocumentType fromString(String string) {
-            if (string != null) {
-                for (DocumentType documentType : DocumentType.values()) {
-                    if (string.equalsIgnoreCase(documentType.string)) return documentType;
-                }
-            }
-            return null;
-        }
-    }
-
-    public Document() { }
 
 }

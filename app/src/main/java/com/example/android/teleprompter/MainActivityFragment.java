@@ -1,6 +1,7 @@
 package com.example.android.teleprompter;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.android.teleprompter.Adaptor.RecyclerViewAdaptors;
 import com.example.android.teleprompter.databinding.FragmentMainBinding;
 import com.example.android.teleprompter.viewModel.DocumentListViewModel;
+import java.util.Observer;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,27 +46,49 @@ public class MainActivityFragment extends Fragment {
 
         mAdaptor = new RecyclerViewAdaptors(getContext());
 
-        
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        documentlistFragmentListBinding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_main,
-                );
+        View root  = inflater.inflate(R.layout.activity_main,container,false);
+
+        initDataBind();
+
+        setUpListOfDocumentListView();
+
+        mTextView_listSubtitle.setText("Today");
+
+        return root;
+    }
+
+    private void initDataBind(){
+
+        documentlistFragmentListBinding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_main);
 
         mDocumentListViewModel = new DocumentListViewModel(getActivity());
+
+        documentlistFragmentListBinding.setViewModel(mDocumentListViewModel);
+    }
+
+    private void setUpListOfDocumentListView(){
 
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mRecyclerView_List.setLayoutManager(mLinearLayoutManager);
 
         mRecyclerView_List.setAdapter(mAdaptor);
+    }
 
-        mTextView_listSubtitle.setText("Today");
+    public void setUpObserver(Observable observeable){
+        observeable.addObserver(this);
+    }
 
-        return root;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mDocumentListViewModel.reset();
     }
 
     @Override

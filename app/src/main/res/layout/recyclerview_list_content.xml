@@ -20,7 +20,7 @@
             android:layout_width="@dimen/list_icon_size"
             android:layout_height="@dimen/list_icon_size"
             android:layout_margin="@dimen/horizon_margin"
-            android:src="@{viewModel.fileType}"
+            android:src="@{viewModel.fileTypeImage}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
