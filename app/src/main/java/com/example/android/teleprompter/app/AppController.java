@@ -3,6 +3,7 @@ package com.example.android.teleprompter.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.android.teleprompter.network.ApiFactory;
 import com.example.android.teleprompter.network.UsersService;
 
 import io.reactivex.Scheduler;
@@ -22,13 +23,13 @@ public class AppController extends Application {
         return AppController.get(context);
     }
 
-//    public UsersService getUserService() {
-//        if (usersService == null) {
-//            usersService = ApiFactory.create();
-//        }
-//
-//        return usersService;
-//    }
+    public UsersService getUserService() {
+        if (usersService == null) {
+            usersService = ApiFactory.create();
+        }
+
+        return usersService;
+    }
 
     public Scheduler subscribeScheduler() {
         if (scheduler == null) {

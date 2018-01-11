@@ -8,20 +8,20 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.android.teleprompter.R;
-import com.example.android.teleprompter.model.Document;
 import com.example.android.teleprompter.databinding.RecyclerviewListContentBinding;
+import com.example.android.teleprompter.model.Document;
 import com.example.android.teleprompter.viewModel.DocumentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdaptors.documentsListViewHolder>{
+public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdaptors.documentsListViewHolder> {
 
     private List<Document> mDocumentList;
 
     private Context mContext;
 
-    public RecyclerViewAdaptors(Context context){
+    public RecyclerViewAdaptors(Context context) {
 
         mDocumentList = new ArrayList<>();
 
@@ -37,14 +37,19 @@ public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdapt
 
     @Override
     public void onBindViewHolder(documentsListViewHolder holder, int position) {
-        RecyclerviewListContentBinding contentBinding = holder.mListContentBinding;
-
-        contentBinding.setViewModel(new DocumentViewModel(mContext,mDocumentList.get(position)));
+        //RecyclerviewListContentBinding contentBinding = holder.mListContentBinding;
+        holder.bindDocument(mDocumentList.get(position));
+        //contentBinding.setViewModel(new DocumentViewModel(mContext,mDocumentList.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return mDocumentList.size();
+    }
+
+    public void setDocumentList(List<Document> documentList){
+        this.mDocumentList = documentList;
+        notifyDataSetChanged();
     }
 
     public static class documentsListViewHolder extends RecyclerView.ViewHolder {
@@ -56,10 +61,16 @@ public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdapt
 
             super(binding.listContentCondtraintLayout);
 
-            mListContentBinding = binding;
+            this.mListContentBinding = binding;
 
+        }
 
-            ;
+        public void bindDocument(Document document) {
+            if (mListContentBinding.getViewModel() == null) {
+                mListContentBinding.setViewModel(new DocumentViewModel(itemView.getContext(), document));
+            } else {
+                mListContentBinding.getViewModel().setDocument(document);
+            }
         }
     }
 

@@ -28,9 +28,10 @@ public class DocumentViewModel extends BaseObservable {
     }
 
     public String getDocumentLastOpenTime(){
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY");
+        //SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY");
 
-        return df.format(mDocument.time);
+        //return df.format(mDocument.time);
+        return mDocument.time;
     }
 
     @BindingAdapter({"bind:fileTypeImage"})
@@ -57,12 +58,13 @@ public class DocumentViewModel extends BaseObservable {
 
     public String getDocumentText(){
 
-
-
-
-
         return mDocument.text;
 
+    }
+
+    public void setDocument(Document document){
+        this.mDocument = document;
+        notifyChange();
     }
 
 }
