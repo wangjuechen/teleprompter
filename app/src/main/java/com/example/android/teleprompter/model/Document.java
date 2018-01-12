@@ -1,15 +1,17 @@
 package com.example.android.teleprompter.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Document implements Serializable {
 
-    public String time;
+    @SerializedName("time") public String time;
 
-    public String title;
+    @SerializedName("title") public String title;
 
-    public String text;
+    @SerializedName("text") public String text;
 
-    public String documentType;
+    @SerializedName("documentType") public String documentType;
 
 }

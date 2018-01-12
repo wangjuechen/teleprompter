@@ -4,21 +4,21 @@ package com.example.android.teleprompter.viewModel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.android.teleprompter.R;
 import com.example.android.teleprompter.model.Document;
+
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-
-public class DocumentViewModel extends BaseObservable {
+public class DocumentDetailsViewModel extends BaseObservable {
 
     private Context mContect;
 
     private Document mDocument;
 
-    public DocumentViewModel(Context context, Document document){
+    public DocumentDetailsViewModel(Context context, Document document){
         this.mContect = context;
         this.mDocument = document;
     }
@@ -34,13 +34,13 @@ public class DocumentViewModel extends BaseObservable {
         return mDocument.time;
     }
 
-    @BindingAdapter({"bind:fileTypeImage"})
-    public static void getDocumentTypeImage(ImageView view, String fileType){
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String fileType){
 
-        int imageId;
-        switch (fileType.substring(fileType.length()-3, 3)) {
-            //TODO: need determine which type this file is
-        }
+//        int imageId = 0;
+//        switch (fileType) {
+//            //TODO: need determine which type this file is
+//        }
 
         Picasso.with(view.getContext())
                 .load(R.drawable.ic_pdf)
@@ -48,13 +48,7 @@ public class DocumentViewModel extends BaseObservable {
 
     }
 
-    public String determineFileType(){
-
-
-
-
-        return mDocument.documentType;
-    }
+    public String getDocumentTypeImage() { return mDocument.documentType ;}
 
     public String getDocumentText(){
 

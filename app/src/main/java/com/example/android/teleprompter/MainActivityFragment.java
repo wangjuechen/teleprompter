@@ -13,25 +13,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.teleprompter.Adaptor.RecyclerViewAdaptors;
+import com.example.android.teleprompter.Adaptor.DocumentAdaptor;
 import com.example.android.teleprompter.ContentProvider.DocumentContract;
 import com.example.android.teleprompter.databinding.FragmentMainBinding;
+import com.example.android.teleprompter.model.Document;
 import com.example.android.teleprompter.utils.DocumentObserver;
 import com.example.android.teleprompter.viewModel.DocumentListViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment implements Observer {
+public class MainActivityFragment extends Fragment {
 
-    private FragmentMainBinding documentlistFragmentListBinding;
+    //private FragmentMainBinding documentlistFragmentListBinding;
+
+    private List<Document> mDocumentList;
 
     private DocumentListViewModel mDocumentListViewModel;
 
     private TextView mTextView_listSubtitle;
+
+    private RecyclerView mDocument_list_rv;
 
     private final String BUNDLE_RECYCLE_LAYOUT = "recycler_view_bundle";
 
@@ -45,6 +52,8 @@ public class MainActivityFragment extends Fragment implements Observer {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDocumentList = new ArrayList<>();
+
     }
 
     @Override
@@ -52,11 +61,15 @@ public class MainActivityFragment extends Fragment implements Observer {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_main, container, false);
 
-        initDataBind();
+        //initDataBind();
 
-        setUpObserver(mDocumentListViewModel);
+        //setUpObserver(mDocumentListViewModel);
 
-        setUpListOfDocumentListView(documentlistFragmentListBinding.rvList);
+        //TODO: need to query document from content provider to save to array list;
+
+        mDocument_list_rv = root.findViewById(R.id.rv_list);
+
+        setUpListOfDocumentListView(mDocument_list_rv);
 
         mDocumentListViewModel.initializeViews();
 
@@ -67,30 +80,32 @@ public class MainActivityFragment extends Fragment implements Observer {
         return root;
     }
 
-    private void initDataBind() {
-
-        documentlistFragmentListBinding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_main);
-        mDocumentListViewModel = new DocumentListViewModel(getActivity());
-        documentlistFragmentListBinding.setViewModel(mDocumentListViewModel);
-    }
+//    private void initDataBind() {
+//
+//        //documentlistFragmentListBinding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_main);
+//        mDocumentListViewModel = new DocumentListViewModel(getActivity());
+//        //documentlistFragmentListBinding.setViewModel(mDocumentListViewModel);
+//    }
 
     private void setUpListOfDocumentListView(RecyclerView documentList) {
 
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        RecyclerViewAdaptors Adaptor = new RecyclerViewAdaptors(getContext());
+        DocumentAdaptor Adaptor = new DocumentAdaptor(getContext(), mDocumentList);
         documentList.setAdapter(Adaptor);
         documentList.setLayoutManager(mLinearLayoutManager);
 
     }
 
-    public void setUpObserver(Observable observerable) {
-        observerable.addObserver(this);
-    }
+//    public void setUpObserver(Observable observerable) {
+//        observerable.addObserver(this);
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        mDocumentObserver = new DocumentObserver(new Handler());
+        mDocumentObserver = new DocumentObserver(new Handler(), getActivity());
+
+        //Register the ContentObserver
         getActivity().getContentResolver().registerContentObserver(DocumentContract.DocumentEntry.CONTENT_URI,
                 true, mDocumentObserver);
 
@@ -101,7 +116,9 @@ public class MainActivityFragment extends Fragment implements Observer {
     public void onDestroy() {
         super.onDestroy();
 
-        mDocumentListViewModel.reset();
+        //mDocumentListViewModel.reset();
+
+        //Unregister the ContentObserver
         getActivity().getContentResolver().unregisterContentObserver(mDocumentObserver);
     }
 
@@ -110,7 +127,7 @@ public class MainActivityFragment extends Fragment implements Observer {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLE_LAYOUT);
-            documentlistFragmentListBinding.rvList.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+            mDocument_list_rv.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
 
     }
@@ -118,21 +135,21 @@ public class MainActivityFragment extends Fragment implements Observer {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(BUNDLE_RECYCLE_LAYOUT, documentlistFragmentListBinding.rvList.getLayoutManager().onSaveInstanceState());
+        outState.putParcelable(BUNDLE_RECYCLE_LAYOUT, mDocument_list_rv.getLayoutManager().onSaveInstanceState());
     }
 
 
-    /**
-     * This paragraph code belongs to Observer class,
-     * which real-time update adapter
-     */
-    @Override
-    public void update(java.util.Observable o, Object arg) {
-        if (o instanceof DocumentListViewModel) {
-
-            RecyclerViewAdaptors documentAdapter = (RecyclerViewAdaptors) documentlistFragmentListBinding.rvList.getAdapter();
-            DocumentListViewModel documentListViewModel = (DocumentListViewModel) o;
-            documentAdapter.setDocumentList(documentListViewModel.getDocumentList());
-        }
-    }
+//    /**
+//     * This paragraph code belongs to Observer class,
+//     * which real-time update adapter
+//     */
+//    @Override
+//    public void update(java.util.Observable o, Object arg) {
+//        if (o instanceof DocumentListViewModel) {
+//
+//            DocumentAdaptor documentAdapter = (DocumentAdaptor) documentlistFragmentListBinding.rvList.getAdapter();
+//            DocumentListViewModel documentListViewModel = (DocumentListViewModel) o;
+//            documentAdapter.setDocumentList(documentListViewModel.getDocumentList());
+//        }
+//    }
 }

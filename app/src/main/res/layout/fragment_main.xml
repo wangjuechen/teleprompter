@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="viewModel"
+            name="documentViewModel"
             type="com.example.android.teleprompter.viewModel.DocumentListViewModel" />
     </data>
 
@@ -23,7 +24,7 @@
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:visibility="@{documentViewModel.progressBar}"/>
+            app:visibility="@{documentViewModel.progressBar}" />
 
         <TextView
             android:id="@+id/label_status"
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@{documentViewModel.messageLabel}"
-            app:visibility="@{documentViewModel.documentLabel}"/>
+            app:visibility="@{documentViewModel.documentLabel}" />
 
         <TextView
             android:id="@+id/tv_list_subtitle"
@@ -42,14 +43,14 @@
             android:gravity="center_vertical"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
             android:textColor="@android:color/darker_gray"
-            tools:text = "Today"/>
+            tools:text="Today" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_list"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:visibility="@{documentViewModel.documentRecycler}"/>
+            android:layout_weight="1"
+            app:visibility="@{documentViewModel.documentRecycler}" />
 
     </LinearLayout>
 </layout>

@@ -8,30 +8,31 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.android.teleprompter.R;
-import com.example.android.teleprompter.databinding.RecyclerviewListContentBinding;
+import com.example.android.teleprompter.databinding.ItemDocumentBinding;
 import com.example.android.teleprompter.model.Document;
-import com.example.android.teleprompter.viewModel.DocumentViewModel;
+import com.example.android.teleprompter.viewModel.DocumentDetailsViewModel;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdaptors.documentsListViewHolder> {
+public class DocumentAdaptor extends RecyclerView.Adapter<DocumentAdaptor.documentsListViewHolder> {
 
     private List<Document> mDocumentList;
 
     private Context mContext;
 
-    public RecyclerViewAdaptors(Context context) {
+    public DocumentAdaptor(Context context, List<Document> documentList) {
 
-        mDocumentList = new ArrayList<>();
+        mDocumentList = documentList;
 
         mContext = context;
     }
 
     @Override
     public documentsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerviewListContentBinding view = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.recyclerview_list_content, parent, false);
+
+        ItemDocumentBinding view = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.item_document, parent, false);
         return new documentsListViewHolder(view);
     }
 
@@ -39,7 +40,7 @@ public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdapt
     public void onBindViewHolder(documentsListViewHolder holder, int position) {
         //RecyclerviewListContentBinding contentBinding = holder.mListContentBinding;
         holder.bindDocument(mDocumentList.get(position));
-        //contentBinding.setViewModel(new DocumentViewModel(mContext,mDocumentList.get(position)));
+        //contentBinding.setViewModel(new DocumentDetailsViewModel(mContext,mDocumentList.get(position)));
     }
 
     @Override
@@ -54,10 +55,10 @@ public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdapt
 
     public static class documentsListViewHolder extends RecyclerView.ViewHolder {
 
-        private RecyclerviewListContentBinding mListContentBinding;
+        private ItemDocumentBinding mListContentBinding;
 
 
-        public documentsListViewHolder(RecyclerviewListContentBinding binding) {
+        public documentsListViewHolder(ItemDocumentBinding binding) {
 
             super(binding.listContentCondtraintLayout);
 
@@ -67,7 +68,7 @@ public class RecyclerViewAdaptors extends RecyclerView.Adapter<RecyclerViewAdapt
 
         public void bindDocument(Document document) {
             if (mListContentBinding.getViewModel() == null) {
-                mListContentBinding.setViewModel(new DocumentViewModel(itemView.getContext(), document));
+                mListContentBinding.setViewModel(new DocumentDetailsViewModel(itemView.getContext(), document));
             } else {
                 mListContentBinding.getViewModel().setDocument(document);
             }
