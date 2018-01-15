@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -20,6 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="com.example.android.teleprompter.app"
+            android:name="com.example.android.teleprompter.ContentProvider.DocumentProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

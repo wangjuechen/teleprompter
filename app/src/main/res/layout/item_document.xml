@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <import type="android.view.View" />
-        <variable
-            name="viewModel"
-            type="com.example.android.teleprompter.viewModel.DocumentDetailsViewModel" />
-    </data>
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/listContent_condtraint_layout"
         android:layout_width="match_parent"
@@ -20,7 +13,6 @@
             android:layout_width="@dimen/list_icon_size"
             android:layout_height="@dimen/list_icon_size"
             android:layout_margin="@dimen/horizon_margin"
-            app:imageUrl="@{viewModel.imageUrl}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +25,6 @@
             android:textAppearance="@android:style/TextAppearance.Holo.Medium"
             android:textSize="@dimen/heading_font_size"
             android:textStyle="bold"
-            android:text="@{viewModel.title}"
             app:layout_constraintLeft_toRightOf="@id/iv_fileTypeIcon"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_fileTypeIcon"
@@ -43,7 +34,6 @@
             android:id="@+id/tv_fileOpenTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.time}"
             app:layout_constraintLeft_toLeftOf="@id/tv_fileTitle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_fileTitle"

@@ -37,5 +37,8 @@ public class DocumentContract {
         public static Uri buildDocumentUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+        public static String[] Columns = new String[]{_ID, COLUMN_DOCUMENT_NAME, COLUMN_DOCUMENT_TYPE, COLUMN_DOCUMENT_LASTOPENTIME, COLUMN_DOCUMENT_CONTENT};
+
     }
 }
